@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data-bin:/var/lib/mysql
     networks:
       - app-network
 
