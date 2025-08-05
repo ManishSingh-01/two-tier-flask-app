@@ -31,10 +31,12 @@ pipeline{
                 }
             }
         }
-        stage("Deploy"){
-            steps{
-                sh "docker-compose down"
-                sh "docker-compose up -d --build flask-app"
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh """
+                     kubectl apply -f k8s/twotier-deployment.yml
+                     kubectl apply -f k8s/two-tier-app-svc.yml
+                """
             }
         }
     }
