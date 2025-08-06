@@ -35,7 +35,7 @@ pipeline{
             steps {
                 sh """
                      kubectl apply -f k8s/mysql-deployment.yml 
-                     kubectl apply -f mysql-svc.yml
+                     kubectl apply -f k8s/-svc.yml
                      kubectl apply -f k8s/two-tier-app-deployment.yml
                      kubectl apply -f k8s/two-tier-app-svc.yml
                 """
