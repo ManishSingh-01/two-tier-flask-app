@@ -34,10 +34,21 @@ pipeline{
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
+                     kubectl apply -f k8s/mysql-deployment.yml 
+                     kubectl apply -f mysql-svc.yml
                      kubectl apply -f k8s/two-tier-app-deployment.yml
                      kubectl apply -f k8s/two-tier-app-svc.yml
                 """
             }
         }
+        stage('Port Forward Service') {
+            steps {
+                sh '''
+                    export KUBECONFIG=/var/lib/jenkins/.kube/config
+                    nohup kubectl port-forward svc/two-tier-app-service 5000:80 --address=0.0.0.0 > port-forward.log 2>&1 &
+                '''
+            }
+        }
+
     }
 }
