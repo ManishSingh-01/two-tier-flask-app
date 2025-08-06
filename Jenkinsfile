@@ -10,7 +10,7 @@ pipeline{
         }
         stage("Build"){
             steps{
-                sh "docker build -t two-tier-flask-app ."
+                sh "docker build -t two-tier-flask-app:latest ."
             }
             
         }
@@ -25,7 +25,7 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'docker_hub_cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh """
                         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                        docker tag two-tier-flask-app $DOCKER_USERNAME/two-tier-flask-app:latest
+                        docker tag two-tier-flask-app:latest $DOCKER_USERNAME/two-tier-flask-app:latest
                         docker push $DOCKER_USERNAME/two-tier-flask-app:latest
                     """
                 }
