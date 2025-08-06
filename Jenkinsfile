@@ -10,8 +10,11 @@ pipeline{
         }
         stage('Code Quality Check') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
+                script {
+                    def scannerHome = tool 'SonarScanner'   // Must match name from Global Tool Configuration
+                    withSonarQubeEnv('SonarQube') {         // Must match name from Jenkins > Configure System
+                    sh "${scannerHome}/bin/sonar-scanner"
+                    }
                 }
             }
         }
