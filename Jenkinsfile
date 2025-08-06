@@ -1,11 +1,6 @@
 pipeline{
     agent any;
-
-    tools {
-        sonarQubeScanner 'SonarScanner'  // matches the scanner name in Jenkins config
-    }
-    
-    stages{
+     stages{
         stage("Code Clone"){
             steps{
                script{
