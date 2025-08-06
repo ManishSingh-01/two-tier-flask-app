@@ -1,11 +1,22 @@
 pipeline{
     agent any;
+
+    tools {
+        sonarQubeScanner 'SonarScanner'  // matches the scanner name in Jenkins config
+    }
     stages{
         stage("Code Clone"){
             steps{
                script{
                    git branch: 'master', url: 'https://github.com/ManishSingh-01/two-tier-flask-app.git'
                }
+            }
+        }
+        stage('Code Quality Check') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'sonar-scanner'
+                }
             }
         }
         stage("Build"){
