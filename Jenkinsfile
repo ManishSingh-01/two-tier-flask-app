@@ -11,9 +11,15 @@ pipeline{
         stage('Code Quality Check') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarScanner'   // Must match name from Global Tool Configuration
-                    withSonarQubeEnv('SonarQube') {         // Must match name from Jenkins > Configure System
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    def scannerHome = tool 'SonarScanner'
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                            sonar-scanner \
+                              -Dsonar.projectKey=demo_test \
+                              -Dsonar.sources=. \
+                              -Dsonar.host.url=http://3.110.32.246:9000 \
+                              -Dsonar.login=sqp_fb86a155e0c48f40a9a9c7c679db47650cf0a5ca
+                        """
                     }
                 }
             }
